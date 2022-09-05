@@ -1,3 +1,5 @@
+// CLASE PRODUCTO
+
 class Producto {
     constructor(tipoProd, marca, precio, stock) {
 
@@ -13,13 +15,14 @@ class Producto {
         if (tipoProd == this.tipoProd && marca == this.marca) {
             if (this.validarStock(cant)) {
                 this.disminuirStock(cant)
-                // alert(`Venta exitosa - ${cant} unidades del producto ${tipoProd} ${marca}`)
-                console.log(`Venta exitosa - quedan ${cant} unidades del producto ${tipoProd} ${marca}`)
+                console.log(`Venta exitosa - Quedan ${cant} unidades del producto ${tipoProd} ${marca} (stock actualizado OK)`)
             }
             else {
-                // alert(`Venta fallida - stock insuficiente del producto ${tipoProd} ${marca}, existen sólo ${this.stock} unidades`)
-                console.log(`Venta fallida - stock insuficiente, hay sólo ${this.stock} unidades del producto ${tipoProd} ${marca}`)
+                console.log(`Venta fallida - Stock insuficiente, hay sólo ${this.stock} unidades del producto ${tipoProd} ${marca}`)
             }
+        }
+        else {
+            console.log("El producto que desea vender no forma parte de su inventario")
         }
     }
 
@@ -30,18 +33,34 @@ class Producto {
     }
 }
 
-
-
-// CARGA DE PRODUCTOS DISPONIBLES
-
+// CREACIÓN PRODUCTO DE PRUEBA
 const lapicera = new Producto("lapicera", "bic", 50, 10)
 
-// SIMULACRO DE COMPRA
+// TRANSFORMA OBJETO A TEXTO PARA VER LOS DISTINTOS ESTADÍOS DEL OBJETO
+function mostrarObjetoEnTexto(objeto) {
+    console.log("Producto\n---------")
+    for (clave in objeto) {
+        if (typeof objeto[clave] != "function") {
+            console.log(`${clave}:${objeto[clave]}`)
+        }
+    }
+}
 
-console.log(lapicera)
+// SIMULACIÓN DE VENTA
+
+mostrarObjetoEnTexto(lapicera)
+
+// Producto inexistente
+console.log("\nSimulación de venta de producto inexistente (Venta de 2 lapiceras pelican)\n--------------------------------------------")
+console.log(lapicera.vender("lapicera", "pelican", 2))
+
+
+// Test con faltantes
+console.log("\nSimulación de venta con stock insuficiente (Venta de 20 lapiceras bic)\n-------------------------------------------")
 console.log(lapicera.vender("lapicera", "bic", 20))
+mostrarObjetoEnTexto(lapicera)
+
+// Test con stock suficiente
+console.log("\nSimulación de venta con stock suficiente (Venta de 5 lapiceras bic)\n-----------------------------------------")
 console.log(lapicera.vender("lapicera", "bic", 5))
-console.log(lapicera)
-
-
-
+mostrarObjetoEnTexto(lapicera)
